@@ -22,6 +22,9 @@
       template: src=templates/sudoers-user.j2
                 dest=/etc/sudoers.d/{{ user }}-sudoer
                 validate='visudo -cf %s'
+   
+    - name: Generate SSH keys
+      shell: ssh-keygen -t rsa -f /root/.ssh/id_rsa -q -N ""
 
     - name: Add my public key to {{ user }}
       authorized_key: user={{ user }}
