@@ -28,7 +28,7 @@
 
    # - name: Add my public key to {{ user }}
     #  authorized_key: user={{ user }}
-                      key="{{ lookup('file', '~/.ssh/id_rsa.pub') }}"
+                     # key="{{ lookup('file', '~/.ssh/id_rsa.pub') }}"
 
     ###################
     # Time management
