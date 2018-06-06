@@ -23,11 +23,11 @@
                 dest=/etc/sudoers.d/{{ user }}-sudoer
                 validate='visudo -cf %s'
    
-    - name: Generate SSH keys
-      shell: ssh-keygen -t rsa -f /root/.ssh/id_rsa -q -N ""
+   # - name: Generate SSH keys
+    #  shell: ssh-keygen -t rsa -f /root/.ssh/id_rsa -q -N ""
 
-    - name: Add my public key to {{ user }}
-      authorized_key: user={{ user }}
+   # - name: Add my public key to {{ user }}
+    #  authorized_key: user={{ user }}
                       key="{{ lookup('file', '~/.ssh/id_rsa.pub') }}"
 
     ###################
@@ -38,8 +38,8 @@
             dest=/etc/timezone
       notify: update tzdata
 
-    - name: Install NTP (and update apt cache for the first install)
-      apt: name=ntp state=present
+    - name: Install NTP (and update yum cache for the first install)
+      yum: name=ntp state=present
            update_cache=yes
 
     - name: Start the ntp service
@@ -49,7 +49,7 @@
     # Security
     ###################
     - name: Install fail2ban
-      apt: name=fail2ban state=present
+      yum: name=fail2ban state=present
 
     - name: Start fail2ban service
       service: name=fail2ban state=started enabled=true
@@ -68,7 +68,7 @@
     # Misc. tools
     ###################
     - name: Install usefull system tools
-      apt: name={{ item }} state=present
+      yum: name={{ item }} state=present
       with_items:
         - vim
         - htop
@@ -80,7 +80,7 @@
     # Nginx
     ###################
     - name: Install Nginx
-      apt: name=nginx state=latest
+      yum: name=nginx state=latest
 
     - name: Start nginx service
       service: name=nginx state=started enabled=true
@@ -93,7 +93,7 @@
     # Supervisor
     ###################
     - name: Install Supervisor
-      apt: name=supervisor state=latest
+      yum: name=supervisor state=latest
 
     - name: Start supervisor service
       service: name=supervisor state=started enabled=true
@@ -102,7 +102,7 @@
     # Python / Virtualenv
     ###################
     - name: Install pip
-      apt: name=python-pip state=latest
+      yum: name=python-pip state=latest
 
     - name: Install virtualenv
       pip: name=virtualenv
