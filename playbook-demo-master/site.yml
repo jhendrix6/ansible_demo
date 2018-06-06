@@ -1,6 +1,7 @@
 ---
 - hosts: all
   remote_user: root
+  ignore_errors: true
 
   vars:
     # Username
